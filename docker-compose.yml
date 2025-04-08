@@ -1,0 +1,51 @@
+networks:
+  api_network:  # Tạo network chung cho API và DB
+    driver: bridge
+
+volumes:
+  api_database:  # Volume lưu trữ dữ liệu PostgreSQL
+
+services:
+  api:
+    build: .
+    container_name: api
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      # - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      # - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_ID}
+      # - GOOGLE_SCOPE=${GOOGLE_SCOPE}
+      # - GOOGLE_REDIRECT_URI=${CALLBACK_URL}
+    depends_on:
+      db:
+        condition: service_healthy  # Chờ đến khi DB sẵn sàng
+    networks:
+      - api_network
+
+  db:
+    image: postgres:15
+    container_name: api_db
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - api_database:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - api_network
+    healthcheck:  # Kiểm tra DB đã sẵn sàng chưa
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      retries: 5
+      start_period: 20s

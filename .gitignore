@@ -1,0 +1,57 @@
+# Ignore Maven target directory
+target/
+
+# Ignore IntelliJ IDEA project files
+*.iml
+.idea/
+
+# Ignore Eclipse project files
+.project
+.classpath
+.settings/
+
+# Ignore VS Code project files
+.vscode/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore environment variable files
+.env
+
+# Ignore compiled class files
+*.class
+
+# Ignore dependency directory
+.mvn/
+
+# Ignore Spring Boot configuration files with sensitive data
+application.properties
+application.yml
+application-*.yml
+
+# Ignore build artifacts
+*.jar
+*.war
+*.ear
+
+# Ignore node_modules (if frontend exists in the same repo)
+node_modules/
+
+# Ignore Docker-related files
+docker-compose.override.yml
+
+# Ignore JWT secrets and private keys
+*.jks
+*.p12
+*.pem
+*.crt
+*.key
+
+# Ignore Docker compose file
+docker-compose.override.yml
