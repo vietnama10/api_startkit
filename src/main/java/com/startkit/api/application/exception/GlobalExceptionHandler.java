@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.startkit.api.application.service.MessageService;
+import com.startkit.api.infrastructure.i18n.MessageService;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

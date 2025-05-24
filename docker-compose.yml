@@ -4,6 +4,7 @@ networks:
 
 volumes:
   api_database:  # Volume lưu trữ dữ liệu PostgreSQL
+  redis_data:
 
 services:
   api:
@@ -49,3 +50,13 @@ services:
       interval: 10s
       retries: 5
       start_period: 20s
+  redis:
+    image: redis:7.2
+    container_name: startkit_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - api_network
