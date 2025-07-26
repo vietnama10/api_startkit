@@ -8,6 +8,7 @@ import com.startkit.api.application.dto.UserSearchParams;
 import com.startkit.api.domain.dao.UserDao;
 import com.startkit.api.domain.model.User;
 import com.startkit.api.infrastructure.entity.UserEntity;
+import com.startkit.api.infrastructure.mapper.UserMapper;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -30,7 +31,7 @@ public class UserDaoImpl implements UserDao {
         StringBuilder countSql = new StringBuilder("SELECT COUNT(*) FROM users u WHERE 1=1");
         StringBuilder sql = new StringBuilder();
         sql.append("""
-            SELECT u.user_id as id, u.name, u.email
+            SELECT u.id as id, u.name, u.email,  u.password
             FROM users u
             WHERE 1=1
         """);
@@ -76,7 +77,7 @@ public class UserDaoImpl implements UserDao {
             params.setTotalPages((long) Math.ceil(totalElements.doubleValue() / params.getSize()));
             
             return users.stream()
-                .map(e -> new User(e.getId(), e.getName(), e.getEmail()))
+                .map(UserMapper::toUser)
                 .toList();
         } catch (Exception e) {
             // Log error and return empty list

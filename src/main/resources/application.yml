@@ -8,11 +8,11 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
     hikari:
-      minimum-idle: 10
-      maximum-pool-size: 20
-      idle-timeout: 30000
-      max-lifetime: 1800000
-      connection-timeout: 30000
+      minimum-idle: ${SPRING_DATASOURCE_MINIMUM_IDLE}
+      maximum-pool-size: ${SPRING_DATASOURCE_MAXIMUM_POOL_SIZE}
+      idle-timeout: ${SPRING_DATASOURCE_IDLE_TIMEOUT}
+      max-lifetime: ${SPRING_DATASOURCE_MAX_LIFETIME}
+      connection-timeout: ${SPRING_DATASOURCE_CONNECTION_TIMEOUT}
 
   jpa:
     hibernate:
@@ -29,16 +29,16 @@ spring:
           issuer-uri: https://accounts.google.com
 
   redis:
-    host: localhost
-    port: 6379
-    timeout: 5000
+    host: ${SPRING_REDIS_HOST}
+    port: ${SPRING_REDIS_PORT}
+    timeout: ${SPRING_REDIS_TIMEOUT}
     cache:
-      ttl: 30
+      ttl: ${SPRING_REDIS_CACHE_TTL}
     lettuce:
       pool:
-        max-active: 10
-        max-idle: 5
-        min-idle: 1
+        max-active: ${SPRING_REDIS_LETTUCE_POOL_MAX_ACTIVE}
+        max-idle: ${SPRING_REDIS_LETTUCE_POOL_MAX_IDLE}
+        min-idle: ${SPRING_REDIS_LETTUCE_POOL_MIN_IDLE}
 
 
   devtools:
